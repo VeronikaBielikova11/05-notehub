@@ -1,13 +1,15 @@
+import type { ComponentType } from "react";
 import ReactPaginateModule from "react-paginate";
+import type { ReactPaginateProps } from "react-paginate";
 import css from "./Pagination.module.css";
 
-type ReactPaginateComponent = typeof ReactPaginateModule;
+type ModuleWithDefault<T> = { default: T };
 
-// react-paginate is a CommonJS package: after bundling, the component can be
-// either the import itself or its "default" field.
-const ReactPaginate =
-  (ReactPaginateModule as unknown as { default?: ReactPaginateComponent })
-    .default ?? ReactPaginateModule;
+const ReactPaginate = (
+  ReactPaginateModule as unknown as ModuleWithDefault<
+    ComponentType<ReactPaginateProps>
+  >
+).default;
 
 interface PaginationProps {
   pageCount: number;
